@@ -1,8 +1,17 @@
-# React + Vite
+# Umbrella Digital Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite site for Umbrella Digital.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Bun](https://bun.sh/) (package manager and runtime)
+
+## Commands
+
+```bash
+bun install    # install dependencies
+bun run dev    # start dev server
+bun run build  # production build
+bun run lint   # ESLint
+bun run preview # preview production build
+```
