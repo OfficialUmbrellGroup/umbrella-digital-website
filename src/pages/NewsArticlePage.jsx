@@ -1,34 +1,32 @@
-import { useEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import { getAdjacentNews, getNewsBySlug, news } from "../content/newsContent";
-import { brand } from "../content/siteContent";
-import { ArrowRight } from "../components/ui/AmberUi";
+import { useEffect } from 'react'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { getAdjacentNews, getNewsBySlug, news } from '../content/newsContent'
+import { brand } from '../content/siteContent'
+import { ArrowRight } from '../components/ui/AmberUi'
 
 function NewsArticlePage() {
-  const { slug } = useParams();
-  const article = getNewsBySlug(slug);
-  const { prev, next } = getAdjacentNews(slug);
+  const { slug } = useParams()
+  const article = getNewsBySlug(slug)
+  const { prev, next } = getAdjacentNews(slug)
 
   useEffect(() => {
     if (article) {
-      document.title = `${article.title} | ${brand.name}`;
+      document.title = `${article.title} | ${brand.name}`
     }
     return () => {
-      document.title = `${brand.name} | Institutional Investment & Asset Management`;
-    };
-  }, [article]);
+      document.title = `${brand.name} | Institutional Investment & Asset Management`
+    }
+  }, [article])
 
   if (!article) {
-    return <Navigate to="/insights" replace />;
+    return <Navigate to="/insights" replace />
   }
 
   return (
     <article className="insight-page">
-      <header className="insight-hero">
-        <div className="wrap">
-          <figure
-            className={`insight-hero__banner news-banner news-banner--${article.image}`}
-          >
+      <header className="insight-hero band band--white">
+        <div className="insights-shell">
+          <figure className={`insight-hero__banner news-banner news-banner--${article.image}`}>
             <img className="news-banner__img" src={article.banner} alt="" />
             <div className="news-banner__overlay" aria-hidden="true" />
             <figcaption className="news-banner__caption">
@@ -36,10 +34,8 @@ function NewsArticlePage() {
             </figcaption>
           </figure>
 
-          <div className="insight-content">
-            <Link to="/insights" className="insight-back">
-              ← News & Insights
-            </Link>
+          <div className="insight-prose">
+            <Link to="/insights" className="insight-back">← News & Insights</Link>
             <div className="insight-hero__meta">
               <span className="news-article__category">{article.category}</span>
               <time dateTime={article.dateISO}>{article.date}</time>
@@ -50,8 +46,8 @@ function NewsArticlePage() {
         </div>
       </header>
 
-      <div className="wrap">
-        <div className="insight-content insight-body">
+      <div className="insights-shell">
+        <div className="insight-prose insight-body">
           {article.body.map((paragraph) => (
             <p key={paragraph.slice(0, 48)}>{paragraph}</p>
           ))}
@@ -59,12 +55,9 @@ function NewsArticlePage() {
       </div>
 
       <aside className="band band--muted insight-nav">
-        <div className="wrap insight-nav__inner">
+        <div className="insights-shell insight-nav__inner">
           {prev ? (
-            <Link
-              to={`/insights/${prev.slug}`}
-              className="insight-nav__link insight-nav__link--prev"
-            >
+            <Link to={`/insights/${prev.slug}`} className="insight-nav__link insight-nav__link--prev">
               <span className="insight-nav__label">Previous</span>
               <span className="insight-nav__title">{prev.title}</span>
             </Link>
@@ -72,13 +65,10 @@ function NewsArticlePage() {
             <div className="insight-nav__spacer" aria-hidden="true" />
           )}
           {next ? (
-            <Link
-              to={`/insights/${next.slug}`}
-              className="insight-nav__link insight-nav__link--next"
-            >
+            <Link to={`/insights/${next.slug}`} className="insight-nav__link insight-nav__link--next">
               <span className="insight-nav__label">Next</span>
               <span className="insight-nav__title">{next.title}</span>
-              <ArrowRight />
+              <ArrowRight className="insight-nav__arrow" />
             </Link>
           ) : (
             <div className="insight-nav__spacer" aria-hidden="true" />
@@ -87,25 +77,20 @@ function NewsArticlePage() {
       </aside>
 
       <section className="band band--white insight-related">
-        <div className="wrap insight-content insight-content--wide">
-          <h2 className="section__title section__title--left section__title--accent">
-            More insights
-          </h2>
+        <div className="insights-shell">
+          <h2 className="insights-section-title">More insights</h2>
           <ul className="insight-related__list">
             {news.items
               .filter((item) => item.slug !== article.slug)
               .slice(0, 3)
               .map((item) => (
                 <li key={item.slug}>
-                  <Link
-                    to={`/insights/${item.slug}`}
-                    className="insight-related__item"
-                  >
+                  <Link to={`/insights/${item.slug}`} className="insight-related__item">
                     <span className="insight-related__meta">
                       {item.category} · {item.date}
                     </span>
                     <span className="insight-related__title">{item.title}</span>
-                    <ArrowRight />
+                    <ArrowRight className="insight-related__arrow" />
                   </Link>
                 </li>
               ))}
@@ -113,7 +98,7 @@ function NewsArticlePage() {
         </div>
       </section>
     </article>
-  );
+  )
 }
 
-export default NewsArticlePage;
+export default NewsArticlePage
