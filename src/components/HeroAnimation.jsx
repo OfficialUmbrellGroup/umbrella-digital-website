@@ -1,24 +1,34 @@
-import { useEffect, useState } from 'react'
-import { headSlider, promoSlides, stats } from '../content/siteContent'
-import { useCarousel } from '../hooks/useCarousel'
-import { useCountUp } from '../hooks/useCountUp'
-import { ArrowRight } from './ui/AmberUi'
-import { RollingDigits } from './ui/RollingDigits'
+import { useEffect, useState } from "react";
+import { headSlider, promoSlides } from "../content/siteContent";
+import { useCarousel } from "../hooks/useCarousel";
+import { useCountUp } from "../hooks/useCountUp";
+import { useRandomStats } from "../hooks/useRandomStats";
+import { ArrowRight } from "./ui/AmberUi";
+import { RollingDigits } from "./ui/RollingDigits";
 
 function StatItem({ stat, active }) {
-  const value = useCountUp(stat.target, 1800, active)
-  const [tipOpen, setTipOpen] = useState(false)
+  const value = useCountUp(stat.target, 1800, active);
+  const [tipOpen, setTipOpen] = useState(false);
 
   return (
     <div className="stats-bar__item">
-      <div className="stats-bar__value">
-        {stat.prefix && <span className="stats-bar__prefix">{stat.prefix}</span>}
-        <RollingDigits value={value} active={active} />
-        {stat.suffix && <span className="stats-bar__suffix">{stat.suffix}</span>}
+      <div
+        className="stats-bar__value"
+        aria-label={`${stat.prefix || ""}${value}${stat.suffix || ""}`}
+      >
+        {stat.prefix && (
+          <span className="stats-bar__prefix">{stat.prefix}</span>
+        )}
+        <RollingDigits value={value} />
+        {stat.suffix && (
+          <span className="stats-bar__suffix">{stat.suffix}</span>
+        )}
       </div>
       {stat.labelHtml ? (
         <p
-          className={`stats-bar__label stats-bar__label--tip ${tipOpen ? 'is-open' : ''}`}
+          className={`stats-bar__label stats-bar__label--tip ${
+            tipOpen ? "is-open" : ""
+          }`}
           onMouseEnter={() => setTipOpen(true)}
           onMouseLeave={() => setTipOpen(false)}
           onFocus={() => setTipOpen(true)}
@@ -33,11 +43,11 @@ function StatItem({ stat, active }) {
         <p className="stats-bar__label">{stat.label}</p>
       )}
     </div>
-  )
+  );
 }
 
 function HeadSlider() {
-  const { index, setIndex, prev, next } = useCarousel(headSlider.length, 5500)
+  const { index, setIndex, prev, next } = useCarousel(headSlider.length, 5500);
 
   return (
     <div className="head-slider">
@@ -47,7 +57,7 @@ function HeadSlider() {
             key={s.cta}
             type="button"
             aria-label={`Headline ${i + 1}`}
-            className={i === index ? 'is-active' : ''}
+            className={i === index ? "is-active" : ""}
             onClick={() => setIndex(i)}
           />
         ))}
@@ -57,10 +67,13 @@ function HeadSlider() {
         {headSlider.map((s, i) => (
           <div
             key={s.cta}
-            className={`head-slider__slide ${i === index ? 'is-active' : ''}`}
+            className={`head-slider__slide ${i === index ? "is-active" : ""}`}
             aria-hidden={i !== index}
           >
-            <h2 className="head-slider__title" dangerouslySetInnerHTML={{ __html: s.html }} />
+            <h2
+              className="head-slider__title"
+              dangerouslySetInnerHTML={{ __html: s.html }}
+            />
             <button type="button" className="head-slider__cta">
               {s.cta}
               <ArrowRight />
@@ -70,69 +83,89 @@ function HeadSlider() {
       </div>
 
       <div className="head-slider__nav">
-        <button type="button" onClick={prev}>Previous</button>
-        <button type="button" onClick={next}>Next</button>
+        <button type="button" onClick={prev}>
+          Previous
+        </button>
+        <button type="button" onClick={next}>
+          Next
+        </button>
       </div>
     </div>
-  )
+  );
 }
 
 function PromoCarousel() {
-  const { index, setIndex, prev, next } = useCarousel(promoSlides.length, 6500)
+  const { index, setIndex, prev, next } = useCarousel(promoSlides.length, 6500);
 
   return (
     <div className="promo-carousel">
-      <button type="button" className="promo-carousel__edge promo-carousel__edge--prev" aria-label="Previous" onClick={prev} />
-      <button type="button" className="promo-carousel__edge promo-carousel__edge--next" aria-label="Next" onClick={next} />
-
-      <div className="promo-carousel__viewport">
-        <div
-          className="promo-carousel__track"
-          style={{ transform: `translateX(calc(-${index * 88}% + 6%))` }}
-        >
+      <div className="promo-carousel__toolbar">
+        <div className="promo-carousel__dots">
           {promoSlides.map((slide, i) => (
-            <article
+            <button
               key={slide.title}
-              className={`promo-card promo-card--${slide.theme} promo-card--${slide.bg} ${i === index ? 'is-center' : ''}`}
-            >
-              {slide.badge && (
-                <span className="promo-card__badge">
-                  <span className="promo-card__badge-icon" aria-hidden="true">🌐</span>
-                  {slide.badge}
-                </span>
-              )}
-              <h3 className={`promo-card__title ${slide.titleAccent ? 'promo-card__title--accent' : ''}`}>
-                {slide.title}
-              </h3>
-              <p className="promo-card__desc">{slide.desc}</p>
-              <button type="button" className="promo-card__btn">{slide.cta}</button>
-            </article>
+              type="button"
+              aria-label={`Promo slide ${i + 1}: ${slide.title}`}
+              className={i === index ? "is-active" : ""}
+              onClick={() => setIndex(i)}
+            />
           ))}
+        </div>
+        <div className="promo-carousel__nav">
+          <button type="button" aria-label="Previous promo" onClick={prev}>
+            Previous
+          </button>
+          <button type="button" aria-label="Next promo" onClick={next}>
+            Next
+          </button>
         </div>
       </div>
 
-      <div className="promo-carousel__dots">
+      <div className="promo-carousel__stage">
         {promoSlides.map((slide, i) => (
-          <button
+          <article
             key={slide.title}
-            type="button"
-            aria-label={`Promo slide ${i + 1}`}
-            className={i === index ? 'is-active' : ''}
-            onClick={() => setIndex(i)}
-          />
+            className={`promo-card promo-card--${slide.theme} promo-card--${
+              slide.bg
+            } ${i === index ? "is-active" : ""}`}
+            aria-hidden={i !== index}
+          >
+            <div className="promo-card__content">
+              {slide.badge && (
+                <span className="promo-card__badge">
+                  <span className="promo-card__badge-icon" aria-hidden="true">
+                    ◆
+                  </span>
+                  {slide.badge}
+                </span>
+              )}
+              <h3
+                className={`promo-card__title ${
+                  slide.titleAccent ? "promo-card__title--accent" : ""
+                }`}
+              >
+                {slide.title}
+              </h3>
+              <p className="promo-card__desc">{slide.desc}</p>
+              <button type="button" className="promo-card__btn">
+                {slide.cta}
+              </button>
+            </div>
+          </article>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 function HeroAnimation() {
-  const [statsActive, setStatsActive] = useState(false)
+  const stats = useRandomStats();
+  const [statsActive, setStatsActive] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setStatsActive(true), 300)
-    return () => clearTimeout(timer)
-  }, [])
+    const frame = requestAnimationFrame(() => setStatsActive(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <section className="hero-animation" aria-label="Featured">
@@ -143,7 +176,7 @@ function HeroAnimation() {
         <div className="stats-bar">
           <div className="wrap stats-bar__inner">
             {stats.map((stat) => (
-              <StatItem key={stat.label || stat.labelHtml} stat={stat} active={statsActive} />
+              <StatItem key={stat.label} stat={stat} active={statsActive} />
             ))}
           </div>
         </div>
@@ -151,7 +184,7 @@ function HeroAnimation() {
         <PromoCarousel />
       </div>
     </section>
-  )
+  );
 }
 
-export default HeroAnimation
+export default HeroAnimation;

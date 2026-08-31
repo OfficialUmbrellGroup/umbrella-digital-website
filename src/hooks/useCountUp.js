@@ -1,24 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export function useCountUp(target, duration = 1800, active = true) {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (!active) return undefined
-
-    let frame
-    const start = performance.now()
-
-    const tick = (now) => {
-      const progress = Math.min((now - start) / duration, 1)
-      const eased = 1 - (1 - progress) ** 3
-      setValue(Math.round(target * eased))
-      if (progress < 1) frame = requestAnimationFrame(tick)
+    if (!active || target <= 0) {
+      setValue(0);
+      return undefined;
     }
 
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [target, duration, active])
+    setValue(0);
+    let frame;
+    const start = performance.now();
 
-  return value
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      const next = Math.round(target * eased);
+      setValue(next);
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        setValue(target);
+      }
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target, duration, active]);
+
+  return value;
 }

@@ -1,5 +1,7 @@
-import Logo from './Logo'
-import { brand, footer } from '../content/siteContent'
+import { Link } from "react-router-dom";
+import Logo from "./Logo";
+import { brand, footer } from "../content/siteContent";
+import { productServices } from "../content/productContent";
 
 function Footer() {
   return (
@@ -19,24 +21,40 @@ function Footer() {
       </div>
 
       <div className="wrap footer__grid">
-        {footer.columns.map((col) => (
-          <div key={col.heading} className="footer__col">
-            <h4>{col.heading}</h4>
-            <ul>
-              {col.links.map((link) => (
-                <li key={link}><a href="#">{link}</a></li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div className="footer__col">
+          <h4>Products & Services</h4>
+          <ul>
+            {productServices.map((product) => (
+              <li key={product.id}>
+                <Link to={product.path}>{product.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {footer.columns
+          .filter((col) => col.heading !== "Products & Services")
+          .map((col) => (
+            <div key={col.heading} className="footer__col">
+              <h4>{col.heading}</h4>
+              <ul>
+                {col.links.map((link) => (
+                  <li key={link}>
+                    <a href="#">{link}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         <div className="footer__brand">
-          <a href="#" className="brand brand--footer">
+          <Link to="/" className="brand brand--footer">
             <Logo />
             <span>{brand.name}</span>
-          </a>
+          </Link>
           <div className="footer__social">
             {footer.social.map((network) => (
-              <a key={network} href="#">{network}</a>
+              <a key={network} href="#">
+                {network}
+              </a>
             ))}
           </div>
         </div>
@@ -44,10 +62,12 @@ function Footer() {
 
       <div className="wrap footer__legal">
         <p>{footer.disclaimer}</p>
-        <p>© {new Date().getFullYear()} {brand.name}</p>
+        <p>
+          © {new Date().getFullYear()} {brand.name}
+        </p>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

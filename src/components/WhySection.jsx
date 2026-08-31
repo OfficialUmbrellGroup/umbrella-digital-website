@@ -1,5 +1,5 @@
-import { why } from '../content/siteContent'
-import { ArrowRight, productIcons } from './ui/AmberUi'
+import { why } from "../content/siteContent";
+import { ArrowRight, productIcons } from "./ui/AmberUi";
 
 function WhySection() {
   return (
@@ -13,7 +13,7 @@ function WhySection() {
 
         <div className="why-grid">
           {why.items.map((item) => {
-            const Icon = productIcons[item.icon]
+            const Icon = productIcons[item.icon];
             return (
               <article key={item.title} className="why-card">
                 <div className="why-card__top">
@@ -26,12 +26,12 @@ function WhySection() {
                   <ArrowRight />
                 </div>
               </article>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default WhySection
+export default WhySection;

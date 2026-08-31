@@ -1,8 +1,8 @@
-import { excellence } from '../content/siteContent'
-import { ArrowRight } from './ui/AmberUi'
+import { excellence } from "../content/siteContent";
+import { ArrowRight } from "./ui/AmberUi";
 
 function Excellence() {
-  const { featured, cards, title } = excellence
+  const { featured, cards, title } = excellence;
 
   return (
     <section className="section section--excellence">
@@ -13,7 +13,9 @@ function Excellence() {
           <div className="exc-featured__copy">
             <h3>{featured.title}</h3>
             <p>{featured.body}</p>
-            <span className="exc-featured__arrow"><ArrowRight /></span>
+            <span className="exc-featured__arrow">
+              <ArrowRight />
+            </span>
           </div>
           <div className="exc-featured__awards">
             {featured.awards.map((name) => (
@@ -26,16 +28,21 @@ function Excellence() {
 
         <div className="exc-grid">
           {cards.map((card) => (
-            <article key={card.title} className={`exc-card exc-card--${card.tone}`}>
+            <article
+              key={card.title}
+              className={`exc-card exc-card--${card.tone}`}
+            >
               <h3>{card.title}</h3>
               <p>{card.body}</p>
-              <span className="exc-card__arrow"><ArrowRight /></span>
+              <span className="exc-card__arrow">
+                <ArrowRight />
+              </span>
             </article>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default Excellence
+export default Excellence;

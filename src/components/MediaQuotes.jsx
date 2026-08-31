@@ -1,5 +1,5 @@
-import { media } from '../content/siteContent'
-import { QuotationMark } from './ui/AmberUi'
+import { media } from "../content/siteContent";
+import { QuotationMark } from "./ui/AmberUi";
 
 function MediaQuotes() {
   return (
@@ -25,7 +25,7 @@ function MediaQuotes() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default MediaQuotes
+export default MediaQuotes;
