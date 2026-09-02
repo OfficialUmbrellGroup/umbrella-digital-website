@@ -1,32 +1,34 @@
-import { useEffect } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
-import { getAdjacentNews, getNewsBySlug, news } from '../content/newsContent'
-import { brand } from '../content/siteContent'
-import { ArrowRight } from '../components/ui/AmberUi'
+import { useEffect } from "react";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { getAdjacentNews, getNewsBySlug, news } from "../content/newsContent";
+import { brand } from "../content/siteContent";
+import { ArrowRight } from "../components/ui/AmberUi";
 
 function NewsArticlePage() {
-  const { slug } = useParams()
-  const article = getNewsBySlug(slug)
-  const { prev, next } = getAdjacentNews(slug)
+  const { slug } = useParams();
+  const article = getNewsBySlug(slug);
+  const { prev, next } = getAdjacentNews(slug);
 
   useEffect(() => {
     if (article) {
-      document.title = `${article.title} | ${brand.name}`
+      document.title = `${article.title} | ${brand.name}`;
     }
     return () => {
-      document.title = `${brand.name} | Institutional Investment & Asset Management`
-    }
-  }, [article])
+      document.title = `${brand.name} | Institutional Investment & Asset Management`;
+    };
+  }, [article]);
 
   if (!article) {
-    return <Navigate to="/insights" replace />
+    return <Navigate to="/insights" replace />;
   }
 
   return (
     <article className="insight-page">
       <header className="insight-hero band band--white">
         <div className="insights-shell">
-          <figure className={`insight-hero__banner news-banner news-banner--${article.image}`}>
+          <figure
+            className={`insight-hero__banner news-banner news-banner--${article.image}`}
+          >
             <img className="news-banner__img" src={article.banner} alt="" />
             <div className="news-banner__overlay" aria-hidden="true" />
             <figcaption className="news-banner__caption">
@@ -35,7 +37,9 @@ function NewsArticlePage() {
           </figure>
 
           <div className="insight-prose">
-            <Link to="/insights" className="insight-back">← News & Insights</Link>
+            <Link to="/insights" className="insight-back">
+              ← News & Insights
+            </Link>
             <div className="insight-hero__meta">
               <span className="news-article__category">{article.category}</span>
               <time dateTime={article.dateISO}>{article.date}</time>
@@ -57,7 +61,10 @@ function NewsArticlePage() {
       <aside className="band band--muted insight-nav">
         <div className="insights-shell insight-nav__inner">
           {prev ? (
-            <Link to={`/insights/${prev.slug}`} className="insight-nav__link insight-nav__link--prev">
+            <Link
+              to={`/insights/${prev.slug}`}
+              className="insight-nav__link insight-nav__link--prev"
+            >
               <span className="insight-nav__label">Previous</span>
               <span className="insight-nav__title">{prev.title}</span>
             </Link>
@@ -65,7 +72,10 @@ function NewsArticlePage() {
             <div className="insight-nav__spacer" aria-hidden="true" />
           )}
           {next ? (
-            <Link to={`/insights/${next.slug}`} className="insight-nav__link insight-nav__link--next">
+            <Link
+              to={`/insights/${next.slug}`}
+              className="insight-nav__link insight-nav__link--next"
+            >
               <span className="insight-nav__label">Next</span>
               <span className="insight-nav__title">{next.title}</span>
               <ArrowRight className="insight-nav__arrow" />
@@ -85,7 +95,10 @@ function NewsArticlePage() {
               .slice(0, 3)
               .map((item) => (
                 <li key={item.slug}>
-                  <Link to={`/insights/${item.slug}`} className="insight-related__item">
+                  <Link
+                    to={`/insights/${item.slug}`}
+                    className="insight-related__item"
+                  >
                     <span className="insight-related__meta">
                       {item.category} · {item.date}
                     </span>
@@ -98,7 +111,7 @@ function NewsArticlePage() {
         </div>
       </section>
     </article>
-  )
+  );
 }
 
-export default NewsArticlePage
+export default NewsArticlePage;

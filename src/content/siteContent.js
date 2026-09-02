@@ -393,11 +393,11 @@ export const footer = {
     {
       heading: "Divisions",
       links: [
-        "Public Markets",
-        "Venture Capital",
-        "Private Equity",
-        "Structured Products",
-        "Infrastructure & Physical Assets",
+        { title: "Public Markets", href: "#" },
+        { title: "Venture Capital", href: "#" },
+        { title: "Private Equity", href: "#" },
+        { title: "Structured Products", href: "#" },
+        { title: "Infrastructure & Physical Assets", href: "#" },
       ],
     },
     {
@@ -413,7 +413,12 @@ export const footer = {
     },
     {
       heading: "Company",
-      links: ["About", "Research", "News & Insights", "Contact"],
+      links: [
+        { title: "About", href: "#" },
+        { title: "Research", href: "#" },
+        { title: "News & Insights", href: "#" },
+        { title: "Contact", href: "mailto:info@umbrellagroup.io" },
+      ],
     },
   ],
   social: ["LinkedIn", "Twitter", "Telegram"],
