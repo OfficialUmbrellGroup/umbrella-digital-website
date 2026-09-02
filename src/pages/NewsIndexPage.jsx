@@ -1,16 +1,16 @@
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { news } from '../content/newsContent'
-import { brand } from '../content/siteContent'
-import { ArrowRight } from '../components/ui/AmberUi'
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { news } from "../content/newsContent";
+import { brand } from "../content/siteContent";
+import { ArrowRight } from "../components/ui/AmberUi";
 
 function NewsIndexPage() {
   useEffect(() => {
-    document.title = `News & Insights | ${brand.name}`
+    document.title = `News & Insights | ${brand.name}`;
     return () => {
-      document.title = `${brand.name} | Institutional Investment & Asset Management`
-    }
-  }, [])
+      document.title = `${brand.name} | Institutional Investment & Asset Management`;
+    };
+  }, []);
 
   return (
     <div className="insights-index">
@@ -19,7 +19,8 @@ function NewsIndexPage() {
           <p className="insights-eyebrow">News & Insights</p>
           <h1 className="insights-index__title">{news.title}</h1>
           <p className="insights-index__lead">
-            Research, fund updates, and market commentary from across the Umbrella Digital platform.
+            Research, fund updates, and market commentary from across the
+            Umbrella Digital platform.
           </p>
         </div>
       </header>
@@ -27,9 +28,19 @@ function NewsIndexPage() {
       <div className="insights-shell insights-index__list">
         {news.items.map((item) => (
           <article key={item.slug} className="insights-index__card">
-            <Link to={`/insights/${item.slug}`} className="insights-index__banner-link">
-              <figure className={`news-banner news-banner--${item.image} insights-index__banner`}>
-                <img className="news-banner__img" src={item.banner} alt="" loading="lazy" />
+            <Link
+              to={`/insights/${item.slug}`}
+              className="insights-index__banner-link"
+            >
+              <figure
+                className={`news-banner news-banner--${item.image} insights-index__banner`}
+              >
+                <img
+                  className="news-banner__img"
+                  src={item.banner}
+                  alt=""
+                  loading="lazy"
+                />
                 <div className="news-banner__overlay" aria-hidden="true" />
                 <figcaption className="news-banner__caption">
                   <span className="news-banner__category">{item.category}</span>
@@ -45,7 +56,10 @@ function NewsIndexPage() {
                 <Link to={`/insights/${item.slug}`}>{item.title}</Link>
               </h2>
               <p className="insights-index__card-excerpt">{item.excerpt}</p>
-              <Link to={`/insights/${item.slug}`} className="insights-index__read">
+              <Link
+                to={`/insights/${item.slug}`}
+                className="insights-index__read"
+              >
                 Read article
                 <ArrowRight />
               </Link>
@@ -54,7 +68,7 @@ function NewsIndexPage() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default NewsIndexPage
+export default NewsIndexPage;

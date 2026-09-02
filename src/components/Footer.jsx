@@ -37,9 +37,9 @@ function Footer() {
             <div key={col.heading} className="footer__col">
               <h4>{col.heading}</h4>
               <ul>
-                {col.links.map((link) => (
-                  <li key={link}>
-                    <a href="#">{link}</a>
+                {col.links.map((link, index) => (
+                  <li key={index}>
+                    <a href={link.href}>{link.title}</a>
                   </li>
                 ))}
               </ul>
